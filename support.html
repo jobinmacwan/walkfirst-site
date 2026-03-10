@@ -1,318 +1,366 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Support - StepFirst</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #FF9500;
-            --primary-dark: #E68600;
-            --primary-light: #FFB340;
-            --bg-dark: #1C1C1E;
-            --bg-darker: #000000;
-            --text-light: #FFFFFF;
-            --text-muted: rgba(255, 255, 255, 0.7);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support - WalkFirst</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+    color: #1a1a1a;
+    background: #fafafa;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  /* Nav */
+  nav {
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    padding: 16px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  nav .nav-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  nav .brand {
+    font-size: 20px;
+    font-weight: 700;
+    color: #FF8C00;
+    text-decoration: none;
+  }
+  nav .nav-links a {
+    font-size: 14px;
+    color: #666;
+    text-decoration: none;
+    margin-left: 24px;
+    font-weight: 500;
+  }
+  nav .nav-links a:hover { color: #FF8C00; }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(180deg, var(--bg-darker) 0%, var(--bg-dark) 50%, #2C2C2E 100%);
-            min-height: 100vh;
-            color: #333;
-            line-height: 1.7;
-        }
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #FF8C00, #FF5933);
+    color: white;
+    text-align: center;
+    padding: 60px 24px;
+  }
+  .hero h1 { font-size: 36px; font-weight: 800; margin-bottom: 8px; }
+  .hero p { font-size: 18px; opacity: 0.9; }
 
-        .header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            padding: 60px 20px;
-            text-align: center;
-            color: white;
-        }
+  /* Content */
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
 
-        .header h1 {
-            font-size: 36px;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
+  /* Contact Card */
+  .contact-card {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    margin-bottom: 48px;
+    text-align: center;
+  }
+  .contact-card h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .contact-card p {
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  .contact-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #FF8C00, #FF5933);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 14px 32px;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .contact-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255,140,0,0.3);
+  }
 
-        .header p {
-            opacity: 0.9;
-            font-size: 16px;
-        }
+  /* FAQ */
+  h2.section-title {
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 24px;
+    color: #1a1a1a;
+  }
+  .faq-item {
+    background: white;
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+  }
+  .faq-item:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  .faq-q {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1a1a1a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .faq-q .arrow {
+    font-size: 20px;
+    color: #FF8C00;
+    transition: transform 0.3s;
+    flex-shrink: 0;
+    margin-left: 16px;
+  }
+  .faq-item.open .faq-q .arrow { transform: rotate(180deg); }
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+  }
+  .faq-item.open .faq-a {
+    max-height: 500px;
+    padding-top: 16px;
+  }
+  .faq-a p {
+    color: #555;
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 8px;
+  }
+  .faq-a p:last-child { margin-bottom: 0; }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
+  /* Category */
+  .faq-category {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #FF8C00;
+    margin-top: 36px;
+    margin-bottom: 16px;
+  }
+  .faq-category:first-of-type { margin-top: 0; }
 
-        .content {
-            background: white;
-            border-radius: 24px;
-            padding: 50px;
-            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
-            margin-top: -30px;
-        }
+  /* Footer note */
+  .footer-note {
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid #eee;
+  }
+  .footer-note a { color: #FF8C00; text-decoration: none; }
 
-        h2 {
-            font-size: 24px;
-            margin: 35px 0 20px;
-            color: var(--bg-dark);
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        h2::before {
-            content: '';
-            width: 4px;
-            height: 24px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            border-radius: 2px;
-        }
-
-        h2:first-child {
-            margin-top: 0;
-        }
-
-        p {
-            margin-bottom: 15px;
-            color: #555;
-            font-size: 16px;
-        }
-
-        .faq-item {
-            background: linear-gradient(145deg, #FFF9F0 0%, #FFF5E6 100%);
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 16px;
-            border: 1px solid rgba(255, 149, 0, 0.15);
-            transition: all 0.3s ease;
-        }
-
-        .faq-item:hover {
-            border-color: var(--primary);
-            box-shadow: 0 8px 25px rgba(255, 149, 0, 0.1);
-        }
-
-        .faq-item h3 {
-            font-size: 17px;
-            margin-bottom: 12px;
-            color: var(--bg-dark);
-            font-weight: 600;
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-        }
-
-        .faq-item h3::before {
-            content: '?';
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 28px;
-            height: 28px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            border-radius: 50%;
-            font-size: 14px;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        .faq-item p {
-            margin-bottom: 0;
-            font-size: 15px;
-            color: #666;
-            padding-left: 40px;
-        }
-
-        .contact-box {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            color: white;
-            margin-top: 40px;
-            box-shadow: 0 15px 40px rgba(255, 149, 0, 0.3);
-        }
-
-        .contact-box h2 {
-            color: white;
-            margin: 0 0 15px 0;
-            justify-content: center;
-        }
-
-        .contact-box h2::before {
-            display: none;
-        }
-
-        .contact-box p {
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 10px;
-        }
-
-        .contact-box a {
-            color: white;
-            font-weight: 700;
-            font-size: 20px;
-            text-decoration: none;
-            display: inline-block;
-            padding: 12px 30px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50px;
-            margin-top: 10px;
-            transition: background 0.2s;
-        }
-
-        .contact-box a:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 40px;
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 15px;
-            transition: gap 0.2s;
-        }
-
-        .back-link:hover {
-            gap: 12px;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 30px;
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-
-        .footer a {
-            color: var(--text-muted);
-            text-decoration: none;
-            margin: 0 15px;
-            transition: color 0.2s;
-        }
-
-        .footer a:hover {
-            color: var(--primary);
-        }
-
-        @media (max-width: 768px) {
-            .header {
-                padding: 40px 20px;
-            }
-
-            .header h1 {
-                font-size: 28px;
-            }
-
-            .content {
-                padding: 30px 20px;
-                border-radius: 20px;
-            }
-
-            h2 {
-                font-size: 22px;
-            }
-
-            .faq-item {
-                padding: 20px;
-            }
-
-            .contact-box {
-                padding: 30px 20px;
-            }
-        }
-    </style>
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 28px; }
+    .hero { padding: 40px 16px; }
+    .container { padding: 32px 16px 60px; }
+    .contact-card { padding: 24px 20px; }
+    .faq-item { padding: 20px 20px; }
+  }
+</style>
 </head>
 <body>
-    <div class="header">
-        <h1>Support</h1>
-        <p>We're here to help you walk more and scroll less</p>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="brand">WalkFirst</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="support.html">Support</a>
     </div>
+  </div>
+</nav>
 
-    <div class="container">
-        <div class="content">
-            <h2>Frequently Asked Questions</h2>
+<div class="hero">
+  <h1>How can we help?</h1>
+  <p>Find answers below or reach out to us directly</p>
+</div>
 
-            <div class="faq-item">
-                <h3>How do I set my daily step goal?</h3>
-                <p>When you first open the app, you'll go through a quick setup where you can choose your daily step target. You can also change this later in the Profile/Settings tab.</p>
-            </div>
+<div class="container">
 
-            <div class="faq-item">
-                <h3>Why does the app need HealthKit access?</h3>
-                <p>StepFirst reads your step count from Apple Health to track your daily walking progress. We only read step data — we don't write or modify any of your health information.</p>
-            </div>
+  <div class="contact-card">
+    <h2>Need help?</h2>
+    <p>We typically respond within 24 hours</p>
+    <a href="mailto:jobinmacwan@gmail.com?subject=WalkFirst%20Support" class="contact-btn">Email Support</a>
+  </div>
 
-            <div class="faq-item">
-                <h3>Why does the app need Screen Time access?</h3>
-                <p>StepFirst uses Apple's Screen Time API (Family Controls) to block and unblock apps based on your step progress. This is the same technology Apple uses for parental controls.</p>
-            </div>
+  <h2 class="section-title">Frequently Asked Questions</h2>
 
-            <div class="faq-item">
-                <h3>My steps aren't updating. What should I do?</h3>
-                <p>Make sure you've granted HealthKit permissions. Go to iOS Settings → Privacy & Security → Health → StepFirst and ensure "Steps" is enabled. Also check that your iPhone or Apple Watch is tracking steps correctly.</p>
-            </div>
+  <!-- Getting Started -->
+  <div class="faq-category">Getting Started</div>
 
-            <div class="faq-item">
-                <h3>Can I unlock apps temporarily without walking?</h3>
-                <p>StepFirst is designed to encourage walking before screen time. However, you can always adjust your step goal in settings if you find it too challenging.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>When do blocked apps unlock?</h3>
-                <p>Apps automatically unlock as soon as you reach your daily step goal. The app checks your progress in real-time.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>Do blocked apps reset every day?</h3>
-                <p>Yes! At midnight, your step count resets and selected apps become blocked again until you complete your new daily goal.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>Is my data shared with anyone?</h3>
-                <p>No. All your data stays on your device. We don't have servers that collect your information. Your health and app usage data is completely private.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>How do I delete my data?</h3>
-                <p>Simply uninstall the app to remove all data. You can also revoke permissions in iOS Settings for HealthKit and Screen Time.</p>
-            </div>
-
-            <div class="contact-box">
-                <h2>Still Need Help?</h2>
-                <p>Contact us and we'll get back to you as soon as possible.</p>
-                <a href="mailto:macwanjobin1525@gmail.com">macwanjobin1525@gmail.com</a>
-            </div>
-
-            <a href="index.html" class="back-link">← Back to Home</a>
-        </div>
-
-        <div class="footer">
-            <p>
-                <a href="index.html">Home</a>
-                <a href="privacy.html">Privacy Policy</a>
-            </p>
-            <p style="margin-top: 15px;">&copy; 2026 StepFirst. All rights reserved.</p>
-        </div>
+  <div class="faq-item">
+    <div class="faq-q">How does WalkFirst work?<span class="arrow">&#9660;</span></div>
+    <div class="faq-a">
+      <p>WalkFirst blocks the apps you choose until you reach your daily step goal. The more you walk, the more screen time you earn:</p>
+      <p><strong>50% of goal</strong> = 10 minutes unlocked<br>
+      <strong>75% of goal</strong> = 15 minutes unlocked<br>
+      <strong>100% of goal</strong> = Unlimited access for the day</p>
+      <p>Step data comes from Apple Health, so just carry your iPhone or wear an Apple Watch and your steps count automatically.</p>
     </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">How do I set up WalkFirst?<span class="arrow">&#9660;</span></div>
+    <div class="faq-a">
+      <p>1. Open WalkFirst and complete the onboarding</p>
+      <p>2. Grant Apple Health permission (to read your steps)</p>
+      <p>3. Grant Screen Time permission (to block apps)</p>
+      <p>4. Set your daily step goal</p>
+      <p>5. Choose which apps to block</p>
+      <p>That's it! WalkFirst will start tracking your steps and managing your app access automatically.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Which apps can I block?<span class="arrow">&#9660;</span></div>
+    <div class="faq-a">
+      <p>You can block any app installed on your iPhone. Most users block social media apps like Instagram, TikTok, YouTube, Twitter/X, and games. You choose exactly which apps to block in the Apps tab.</p>
+    </div>
+  </div>
+
+  <!-- Step Tracking -->
+  <div class="faq-category">Step Tracking</div>
+
+  <div class="faq-item">
+    <div class="faq-q">My steps aren't updating. What should I do?<span class="arrow">&#9660;</span></div>
+    <div class="faq-a">
+      <p>Try these steps:</p>
+      <p>1. Open the <strong>Health</strong> app and check if steps are being recorded</p>
+      <p>2. Go to <strong>Settings &gt; Privacy &gt; Health &gt; WalkFirst</strong> and make sure step data is enabled</p>
+      <p>3. Make sure Background App Refresh is enabled for WalkFirst in Settings</p>
+      <p>4. Restart the WalkFirst app</p>
+      <p>If steps still aren't updating, try restarting your iPhone and opening WalkFirst again.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Does WalkFirst work with Apple Watch?<span class="arrow">&#9660;</span></div>
+    <div class="faq-a">
+      <p>Yes! WalkFirst reads step data from Apple Health, which automatically includes steps tracked by your Apple Watch. There's no separate Apple Watch app needed - as long as your Apple Watch syncs with the Health app, WalkFirst will count those steps.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Can I change my daily step goal?<span class="arrow">&#9660;</span></div>
+    <div class="faq-a">
+      <p>Yes! Go to <strong>Profile &gt; Goals &gt; Daily Steps Goal</strong> and adjust your target. You can change it anytime. We recommend starting with a manageable goal and increasing it gradually.</p>
+    </div>
+  </div>
+
+  <!-- App Blocking -->
+  <div class="faq-category">App Blocking</div>
+
+  <div class="faq-item">
+    <div class="faq-q">When do blocked apps reset?<span class="arrow">&#9660;</span></div>
+    <div class="faq-a">
+      <p>Blocked apps reset every morning. Each day starts fresh - your step count resets and apps are blocked again until you start walking and earning screen time for the new day.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Can I set blocking for weekdays only?<span class="arrow">&#9660;</span></div>
+    <div class="faq-a">
+      <p>Yes! Go to <strong>Profile &gt; App Settings &gt; Blocking Schedule</strong> and choose "Weekdays Only." This gives you freedom on weekends while keeping you disciplined during the work week.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">What happens when my earned time runs out?<span class="arrow">&#9660;</span></div>
+    <div class="faq-a">
+      <p>When your earned minutes run out, your selected apps will be blocked again. You can earn more time by continuing to walk toward your step goal. Once you reach 100% of your goal, you get unlimited access for the rest of the day.</p>
+    </div>
+  </div>
+
+  <!-- Subscription -->
+  <div class="faq-category">Subscription</div>
+
+  <div class="faq-item">
+    <div class="faq-q">What's included in WalkFirst Pro?<span class="arrow">&#9660;</span></div>
+    <div class="faq-a">
+      <p>WalkFirst Pro includes:</p>
+      <p>&#8226; Unlimited app blocking<br>
+      &#8226; Advanced achievements and milestones<br>
+      &#8226; Full progress history (weekly, monthly, yearly)<br>
+      &#8226; Priority support</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">How do I cancel my subscription?<span class="arrow">&#9660;</span></div>
+    <div class="faq-a">
+      <p>Subscriptions are managed through Apple. To cancel:</p>
+      <p>1. Open <strong>Settings</strong> on your iPhone</p>
+      <p>2. Tap your name at the top</p>
+      <p>3. Tap <strong>Subscriptions</strong></p>
+      <p>4. Find WalkFirst and tap <strong>Cancel Subscription</strong></p>
+      <p>You'll continue to have access until the end of your current billing period.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Can I get a refund?<span class="arrow">&#9660;</span></div>
+    <div class="faq-a">
+      <p>Refunds are handled by Apple. To request a refund, visit <a href="https://reportaproblem.apple.com" target="_blank" rel="noopener">reportaproblem.apple.com</a>, sign in with your Apple ID, and find the WalkFirst purchase.</p>
+    </div>
+  </div>
+
+  <!-- Privacy -->
+  <div class="faq-category">Privacy & Data</div>
+
+  <div class="faq-item">
+    <div class="faq-q">What data does WalkFirst collect?<span class="arrow">&#9660;</span></div>
+    <div class="faq-a">
+      <p>Your health data (steps, calories, distance) and personal information (name, goals) are stored <strong>only on your device</strong>. We use anonymized analytics to improve the app and a third-party service for subscription management. We never sell your data. See our full <a href="privacy-policy.html">Privacy Policy</a> for details.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">How do I delete my data?<span class="arrow">&#9660;</span></div>
+    <div class="faq-a">
+      <p>Since your data is stored locally on your device, deleting the WalkFirst app will permanently remove all your data including step records, achievements, streaks, and personal information.</p>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    <p>Still need help? Email us at <a href="mailto:jobinmacwan@gmail.com">jobinmacwan@gmail.com</a></p>
+    <p style="margin-top:8px;"><a href="privacy-policy.html">Privacy Policy</a></p>
+  </div>
+
+</div>
+
+<script>
+document.querySelectorAll('.faq-item').forEach(function(item) {
+  item.querySelector('.faq-q').addEventListener('click', function() {
+    // Close others
+    document.querySelectorAll('.faq-item.open').forEach(function(other) {
+      if (other !== item) other.classList.remove('open');
+    });
+    item.classList.toggle('open');
+  });
+});
+</script>
+
 </body>
 </html>

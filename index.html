@@ -1,683 +1,591 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StepFirst - Walk More, Scroll Less</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #FF9500;
-            --primary-dark: #E68600;
-            --primary-light: #FFB340;
-            --secondary: #007AFF;
-            --success: #34C759;
-            --warning: #FF3B30;
-            --bg-dark: #1C1C1E;
-            --bg-darker: #000000;
-            --text-light: #FFFFFF;
-            --text-muted: rgba(255, 255, 255, 0.7);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(180deg, var(--bg-darker) 0%, var(--bg-dark) 50%, #2C2C2E 100%);
-            min-height: 100vh;
-            color: #333;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 80px 20px 60px;
-            color: white;
-        }
-
-        .app-icon {
-            width: 140px;
-            height: 140px;
-            background: linear-gradient(145deg, var(--primary-light) 0%, var(--primary) 50%, var(--primary-dark) 100%);
-            border-radius: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 35px;
-            box-shadow: 0 20px 60px rgba(255, 149, 0, 0.4), 0 0 100px rgba(255, 149, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .app-icon::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
-            animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) rotate(45deg); }
-        }
-
-        .app-icon svg {
-            width: 70px;
-            height: 70px;
-            fill: white;
-            z-index: 1;
-        }
-
-        .hero h1 {
-            font-size: 56px;
-            font-weight: 800;
-            margin-bottom: 15px;
-            background: linear-gradient(135deg, #fff 0%, var(--primary-light) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero .tagline {
-            font-size: 24px;
-            opacity: 0.9;
-            margin-bottom: 25px;
-            font-weight: 500;
-        }
-
-        .hero .subtitle {
-            font-size: 16px;
-            opacity: 0.7;
-            max-width: 500px;
-            margin: 0 auto 35px;
-            line-height: 1.6;
-        }
-
-        .badges {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 149, 0, 0.15);
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-size: 14px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 149, 0, 0.3);
-        }
-
-        .badge-icon {
-            font-size: 16px;
-        }
-
-        /* Stats Section */
-        .stats-section {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            padding: 0 20px;
-            margin-bottom: 40px;
-        }
-
-        .stat-card {
-            background: rgba(255, 149, 0, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            text-align: center;
-            border: 1px solid rgba(255, 149, 0, 0.2);
-        }
-
-        .stat-number {
-            font-size: 36px;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            font-size: 14px;
-            color: var(--text-muted);
-        }
-
-        /* Content Card */
-        .content {
-            background: white;
-            border-radius: 32px;
-            padding: 50px;
-            margin-top: 20px;
-            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
-        }
-
-        .section {
-            margin-bottom: 50px;
-        }
-
-        .section:last-child {
-            margin-bottom: 0;
-        }
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-
-        .section-icon {
-            width: 44px;
-            height: 44px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        .section h2 {
-            font-size: 28px;
-            color: var(--bg-dark);
-            font-weight: 700;
-        }
-
-        .section p {
-            font-size: 17px;
-            line-height: 1.8;
-            color: #555;
-        }
-
-        /* Features Grid */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-top: 25px;
-        }
-
-        .feature {
-            background: linear-gradient(145deg, #FFF9F0 0%, #FFF5E6 100%);
-            padding: 28px;
-            border-radius: 20px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(255, 149, 0, 0.15);
-        }
-
-        .feature:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(255, 149, 0, 0.15);
-        }
-
-        .feature-icon {
-            font-size: 44px;
-            margin-bottom: 18px;
-        }
-
-        .feature h3 {
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: var(--bg-dark);
-            font-weight: 600;
-        }
-
-        .feature p {
-            font-size: 15px;
-            color: #666;
-            line-height: 1.6;
-        }
-
-        /* How it Works */
-        .how-it-works {
-            counter-reset: step;
-        }
-
-        .step {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 25px;
-            padding: 25px;
-            background: #FFF9F0;
-            border-radius: 16px;
-            transition: all 0.3s ease;
-            border: 1px solid transparent;
-        }
-
-        .step:hover {
-            border-color: var(--primary);
-            background: #FFF5E6;
-        }
-
-        .step::before {
-            counter-increment: step;
-            content: counter(step);
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 18px;
-            margin-right: 20px;
-            flex-shrink: 0;
-        }
-
-        .step-content h3 {
-            font-size: 18px;
-            margin-bottom: 8px;
-            color: var(--bg-dark);
-            font-weight: 600;
-        }
-
-        .step-content p {
-            font-size: 15px;
-            color: #666;
-            line-height: 1.6;
-        }
-
-        /* Benefits Section */
-        .benefits {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 25px;
-        }
-
-        .benefit {
-            text-align: center;
-            padding: 25px 15px;
-        }
-
-        .benefit-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
-        }
-
-        .benefit h4 {
-            font-size: 16px;
-            color: var(--bg-dark);
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .benefit p {
-            font-size: 14px;
-            color: #777;
-        }
-
-        /* Privacy Box */
-        .privacy {
-            background: linear-gradient(145deg, #FFF3E0 0%, #FFE0B2 100%);
-            padding: 25px 30px;
-            border-radius: 16px;
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
-            border: 1px solid #FFB74D;
-        }
-
-        .privacy-icon {
-            font-size: 36px;
-            flex-shrink: 0;
-        }
-
-        .privacy h3 {
-            color: #E65100;
-            margin-bottom: 8px;
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .privacy p {
-            font-size: 15px;
-            color: #EF6C00;
-            line-height: 1.6;
-        }
-
-        /* App Store Badge */
-        .app-store-section {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 40px;
-            border-top: 1px solid #eee;
-        }
-
-        .app-store-section p {
-            font-size: 15px;
-            color: #888;
-            margin-bottom: 15px;
-        }
-
-        .coming-soon-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 15px 30px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            box-shadow: 0 8px 25px rgba(255, 149, 0, 0.3);
-        }
-
-        .coming-soon-badge svg {
-            width: 24px;
-            height: 24px;
-            fill: white;
-        }
-
-        /* Contact Section */
-        .contact {
-            text-align: center;
-            padding: 50px 20px;
-            color: white;
-        }
-
-        .contact h2 {
-            font-size: 28px;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .contact p {
-            opacity: 0.8;
-            margin-bottom: 5px;
-        }
-
-        .contact a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 18px;
-        }
-
-        .contact a:hover {
-            text-decoration: underline;
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 25px;
-            color: rgba(255,255,255,0.5);
-            font-size: 14px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .footer-links {
-            margin-bottom: 15px;
-        }
-
-        .footer-links a {
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
-            margin: 0 15px;
-            transition: color 0.2s;
-        }
-
-        .footer-links a:hover {
-            color: var(--primary);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 40px;
-            }
-
-            .hero .tagline {
-                font-size: 20px;
-            }
-
-            .stats-section {
-                grid-template-columns: 1fr;
-            }
-
-            .content {
-                padding: 30px 20px;
-                border-radius: 24px;
-            }
-
-            .features {
-                grid-template-columns: 1fr;
-            }
-
-            .benefits {
-                grid-template-columns: 1fr;
-            }
-
-            .section h2 {
-                font-size: 24px;
-            }
-
-            .privacy {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WalkFirst - Earn Screen Time by Walking</title>
+<meta name="description" content="WalkFirst blocks distracting apps until you hit your daily step goal. Walk more, scroll less. Available on the App Store.">
+<meta name="keywords" content="WalkFirst, screen time, app blocker, focus timer, app lock, block apps, step counter, digital wellbeing">
+<meta property="og:title" content="WalkFirst - Earn Screen Time by Walking">
+<meta property="og:description" content="Block distracting apps and earn screen time by walking. The more you move, the more you unlock.">
+<meta property="og:type" content="website">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    color: #1a1a1a;
+    background: #fff;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Nav */
+  nav {
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    padding: 16px 24px;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+  }
+  nav .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  nav .brand {
+    font-size: 22px;
+    font-weight: 800;
+    color: #FF8C00;
+    text-decoration: none;
+  }
+  nav .nav-links a {
+    font-size: 15px;
+    color: #555;
+    text-decoration: none;
+    margin-left: 28px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  nav .nav-links a:hover { color: #FF8C00; }
+
+  /* Hero */
+  .hero {
+    padding: 140px 24px 80px;
+    text-align: center;
+    background: linear-gradient(180deg, #fff 0%, #FFF8F0 100%);
+    position: relative;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,140,0,0.1);
+    color: #FF8C00;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-size: 56px;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    color: #1a1a1a;
+  }
+  .hero h1 span { color: #FF8C00; }
+  .hero .subtitle {
+    font-size: 20px;
+    color: #666;
+    max-width: 540px;
+    margin: 0 auto 36px;
+    line-height: 1.6;
+  }
+  .cta-group {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .cta-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #1a1a1a;
+    color: white;
+    font-size: 17px;
+    font-weight: 600;
+    padding: 16px 32px;
+    border-radius: 14px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .cta-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  }
+  .cta-primary svg { width: 24px; height: 24px; fill: white; }
+
+  /* Feature Showcase (Phone + Features alternating) */
+  .showcase {
+    padding: 60px 24px 0;
+  }
+  .showcase-row {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 60px 0;
+  }
+  .showcase-row.reverse { flex-direction: row-reverse; }
+  .showcase-row + .showcase-row {
+    border-top: 1px solid #f0f0f0;
+  }
+
+  /* Phone image (already has mockup frame) */
+  .phone-frame {
+    flex-shrink: 0;
+    width: 280px;
+  }
+  .phone-frame img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.10));
+  }
+
+  /* Feature details next to phone */
+  .showcase-info {
+    flex: 1;
+  }
+  .showcase-badge {
+    display: inline-block;
+    background: rgba(255,140,0,0.1);
+    color: #FF8C00;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
+  }
+  .showcase-info h3 {
+    font-size: 30px;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+  .showcase-info > p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .showcase-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .showcase-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 15px;
+    color: #444;
+    line-height: 1.5;
+  }
+  .showcase-features li .sf-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(255,140,0,0.1), rgba(255,89,51,0.1));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .showcase-features li .sf-text strong {
+    display: block;
+    color: #1a1a1a;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .showcase-features li .sf-text span {
+    color: #888;
+    font-size: 14px;
+  }
+
+  @media (max-width: 768px) {
+    .showcase-row, .showcase-row.reverse {
+      flex-direction: column;
+      gap: 32px;
+      padding: 40px 0;
+    }
+    .phone-frame { width: 200px; }
+    .showcase-info h3 { font-size: 24px; }
+    .showcase-info { text-align: center; }
+    .showcase-features li { text-align: left; }
+  }
+
+  /* How It Works */
+  .how-it-works {
+    padding: 80px 24px;
+    background: #fff;
+  }
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #FF8C00;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: 40px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 48px;
+    color: #1a1a1a;
+  }
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .step-card {
+    background: #FAFAFA;
+    border-radius: 20px;
+    padding: 36px 28px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .step-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+  }
+  .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FF8C00, #FF5933);
+    color: white;
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 16px;
+  }
+  .step-card h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .step-card p {
+    font-size: 15px;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  /* Tier Section */
+  .tiers {
+    padding: 80px 24px;
+    background: linear-gradient(180deg, #FFF8F0 0%, #fff 100%);
+  }
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .tier-card {
+    background: white;
+    border-radius: 20px;
+    padding: 32px 24px;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    border: 2px solid transparent;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .tier-card:hover { transform: translateY(-4px); }
+  .tier-card.featured {
+    border-color: #FF8C00;
+    box-shadow: 0 8px 32px rgba(255,140,0,0.15);
+  }
+  .tier-pct {
+    font-size: 42px;
+    font-weight: 900;
+    color: #FF8C00;
+    margin-bottom: 4px;
+  }
+  .tier-label {
+    font-size: 14px;
+    color: #999;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .tier-reward {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+  .tier-reward small {
+    display: block;
+    font-size: 14px;
+    color: #888;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+
+  /* (Old features grid removed - now in showcase) */
+
+  /* CTA Bottom */
+  .bottom-cta {
+    padding: 80px 24px;
+    text-align: center;
+    background: linear-gradient(135deg, #FF8C00, #FF5933);
+    color: white;
+  }
+  .bottom-cta h2 {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+  .bottom-cta p {
+    font-size: 18px;
+    opacity: 0.9;
+    margin-bottom: 32px;
+  }
+  .cta-white {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    color: #1a1a1a;
+    font-size: 17px;
+    font-weight: 600;
+    padding: 16px 32px;
+    border-radius: 14px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .cta-white:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  }
+  .cta-white svg { width: 22px; height: 22px; }
+
+  /* Footer */
+  footer {
+    background: #1a1a1a;
+    color: #aaa;
+    padding: 40px 24px;
+    text-align: center;
+    font-size: 14px;
+  }
+  footer a {
+    color: #aaa;
+    text-decoration: none;
+    margin: 0 12px;
+  }
+  footer a:hover { color: #FF8C00; }
+  footer .footer-brand {
+    color: #FF8C00;
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 12px;
+    display: block;
+  }
+  footer .footer-links { margin-bottom: 16px; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 36px; }
+    .hero .subtitle { font-size: 17px; }
+    .section-title { font-size: 30px; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .tier-grid { grid-template-columns: 1fr; max-width: 320px; }
+    .bottom-cta h2 { font-size: 28px; }
+  }
+</style>
 </head>
 <body>
-    <div class="hero">
-        <div class="app-icon">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/>
-            </svg>
-        </div>
-        <h1>StepFirst</h1>
-        <p class="tagline">Walk More, Scroll Less</p>
-        <p class="subtitle">Take control of your screen time by earning it. Complete your daily step goal to unlock your favorite apps.</p>
-        <div class="badges">
-            <span class="badge"><span class="badge-icon">🍎</span> iOS App</span>
-            <span class="badge"><span class="badge-icon">❤️</span> HealthKit</span>
-            <span class="badge"><span class="badge-icon">🔒</span> Screen Time API</span>
-        </div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="brand">WalkFirst</a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how">How It Works</a>
+      <a href="support.html">Support</a>
+      <a href="privacy-policy.html">Privacy</a>
     </div>
+  </div>
+</nav>
 
-    <div class="container">
-        <!-- Stats Section -->
-        <div class="stats-section">
-            <div class="stat-card">
-                <div class="stat-number">10K+</div>
-                <div class="stat-label">Daily Steps Goal</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">50%</div>
-                <div class="stat-label">Less Screen Time</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">100%</div>
-                <div class="stat-label">Privacy Focused</div>
-            </div>
-        </div>
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-badge">Available on the App Store</div>
+  <h1>Walk First.<br><span>Scroll Later.</span></h1>
+  <p class="subtitle">Block distracting apps and earn screen time by hitting your daily step goal. The more you move, the more you unlock.</p>
+  <div class="cta-group">
+    <a href="#" class="cta-primary">
+      <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      Download on the App Store
+    </a>
+  </div>
+</section>
 
-        <div class="content">
-            <!-- About Section -->
-            <div class="section">
-                <div class="section-header">
-                    <div class="section-icon">📱</div>
-                    <h2>About StepFirst</h2>
-                </div>
-                <p>StepFirst is a revolutionary screen time management app that transforms your relationship with your phone. Instead of mindlessly scrolling, you'll earn your screen time through physical activity. Set a daily step goal, choose which apps to limit, and watch as your health improves while your screen addiction fades away.</p>
-            </div>
+<!-- Feature Showcase -->
+<section class="showcase" id="features">
+  <div class="section-inner">
+    <div class="section-label">See It In Action</div>
+    <h2 class="section-title">Designed for simplicity</h2>
+  </div>
 
-            <!-- Features Section -->
-            <div class="section">
-                <div class="section-header">
-                    <div class="section-icon">✨</div>
-                    <h2>Features</h2>
-                </div>
-                <div class="features">
-                    <div class="feature">
-                        <div class="feature-icon">👟</div>
-                        <h3>Smart Step Tracking</h3>
-                        <p>Seamlessly syncs with Apple Health for accurate, real-time step counting throughout your day.</p>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">🔐</div>
-                        <h3>Intelligent App Blocking</h3>
-                        <p>Block distracting apps like Instagram, TikTok, and games until you've earned your screen time.</p>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">🏆</div>
-                        <h3>Achievements & Badges</h3>
-                        <p>Earn rewards for consistency. Unlock badges for streaks, milestones, and special challenges.</p>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">📊</div>
-                        <h3>Detailed Statistics</h3>
-                        <p>Track your progress with beautiful charts showing daily, weekly, and monthly activity trends.</p>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">🎯</div>
-                        <h3>Customizable Goals</h3>
-                        <p>Set step targets that match your lifestyle. Start small and increase as you build healthy habits.</p>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">⚡</div>
-                        <h3>Instant Unlock</h3>
-                        <p>Apps unlock automatically the moment you hit your goal. No manual intervention needed.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- How It Works Section -->
-            <div class="section">
-                <div class="section-header">
-                    <div class="section-icon">🚀</div>
-                    <h2>How It Works</h2>
-                </div>
-                <div class="how-it-works">
-                    <div class="step">
-                        <div class="step-content">
-                            <h3>Set Your Daily Step Goal</h3>
-                            <p>Choose a step target that challenges you but remains achievable. We recommend starting with 5,000-8,000 steps.</p>
-                        </div>
-                    </div>
-                    <div class="step">
-                        <div class="step-content">
-                            <h3>Select Apps to Block</h3>
-                            <p>Pick the apps that waste your time — social media, games, streaming services. You're in full control.</p>
-                        </div>
-                    </div>
-                    <div class="step">
-                        <div class="step-content">
-                            <h3>Walk & Earn Your Screen Time</h3>
-                            <p>Go for a walk, take the stairs, move around. Watch your progress bar fill up in real-time.</p>
-                        </div>
-                    </div>
-                    <div class="step">
-                        <div class="step-content">
-                            <h3>Apps Unlock Automatically</h3>
-                            <p>Once you hit your goal, all blocked apps instantly unlock. Enjoy your earned screen time guilt-free!</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Benefits Section -->
-            <div class="section">
-                <div class="section-header">
-                    <div class="section-icon">💪</div>
-                    <h2>Why StepFirst?</h2>
-                </div>
-                <div class="benefits">
-                    <div class="benefit">
-                        <div class="benefit-icon">🏃</div>
-                        <h4>Stay Active</h4>
-                        <p>Build a daily walking habit without thinking about it</p>
-                    </div>
-                    <div class="benefit">
-                        <div class="benefit-icon">🧠</div>
-                        <h4>Mental Clarity</h4>
-                        <p>Less scrolling means more focus and productivity</p>
-                    </div>
-                    <div class="benefit">
-                        <div class="benefit-icon">😴</div>
-                        <h4>Better Sleep</h4>
-                        <p>Reduced screen time leads to improved sleep quality</p>
-                    </div>
-                    <div class="benefit">
-                        <div class="benefit-icon">⏰</div>
-                        <h4>Time Freedom</h4>
-                        <p>Reclaim hours lost to mindless scrolling</p>
-                    </div>
-                    <div class="benefit">
-                        <div class="benefit-icon">🎮</div>
-                        <h4>Guilt-Free Fun</h4>
-                        <p>Enjoy apps knowing you've earned the time</p>
-                    </div>
-                    <div class="benefit">
-                        <div class="benefit-icon">📈</div>
-                        <h4>Track Progress</h4>
-                        <p>Watch your healthy habits grow over time</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Privacy Section -->
-            <div class="section">
-                <div class="privacy">
-                    <div class="privacy-icon">🔐</div>
-                    <div>
-                        <h3>Your Privacy Comes First</h3>
-                        <p>All your health and app usage data stays on your device. We never upload your personal information to external servers. StepFirst uses Apple's secure HealthKit and Screen Time APIs, ensuring your data remains private and protected.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- App Store Section -->
-            <div class="app-store-section">
-                <p>Available soon on the App Store</p>
-                <div class="coming-soon-badge">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-                    </svg>
-                    Coming Soon to App Store
-                </div>
-            </div>
-        </div>
-
-        <!-- Contact Section -->
-        <div class="contact">
-            <h2>Get In Touch</h2>
-            <p>Questions, feedback, or partnership inquiries?</p>
-            <p><a href="mailto:macwanjobin1525@gmail.com">macwanjobin1525@gmail.com</a></p>
-        </div>
-
-        <!-- Footer -->
-        <div class="footer">
-            <div class="footer-links">
-                <a href="privacy.html">Privacy Policy</a>
-                <a href="support.html">Support</a>
-            </div>
-            <p>&copy; 2026 StepFirst. All rights reserved.</p>
-        </div>
+  <!-- 1. Home Screen -->
+  <div class="showcase-row">
+    <div class="phone-frame">
+      <img src="images/screen-home.png" alt="WalkFirst Home Screen" loading="lazy">
     </div>
+    <div class="showcase-info">
+      <div class="showcase-badge">Home</div>
+      <h3>Track Your Steps.<br>Earn Your Screen Time.</h3>
+      <p>Your daily dashboard — see your progress at a glance and know exactly how much screen time you've earned.</p>
+      <ul class="showcase-features">
+        <li><span class="sf-icon">&#128200;</span><div class="sf-text"><strong>Live Step Progress Ring</strong><span>Watch your progress in real time as you walk</span></div></li>
+        <li><span class="sf-icon">&#9201;</span><div class="sf-text"><strong>Earned Time Display</strong><span>See how many minutes you've unlocked today</span></div></li>
+        <li><span class="sf-icon">&#127942;</span><div class="sf-text"><strong>Milestone Indicators</strong><span>Hit 50%, 75%, or 100% of your goal to unlock more</span></div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 2. Apps Screen -->
+  <div class="showcase-row reverse">
+    <div class="phone-frame">
+      <img src="images/screen-apps.png" alt="WalkFirst Apps Screen" loading="lazy">
+    </div>
+    <div class="showcase-info">
+      <div class="showcase-badge">Apps</div>
+      <h3>Your Apps.<br>Your Rules.</h3>
+      <p>Choose exactly which apps get blocked. Social media, games, video — you decide what stays locked until you walk.</p>
+      <ul class="showcase-features">
+        <li><span class="sf-icon">&#128274;</span><div class="sf-text"><strong>Block Any App</strong><span>Instagram, TikTok, YouTube, games — your choice</span></div></li>
+        <li><span class="sf-icon">&#128260;</span><div class="sf-text"><strong>Daily Auto-Reset</strong><span>Apps reset every morning for a fresh start</span></div></li>
+        <li><span class="sf-icon">&#128197;</span><div class="sf-text"><strong>Flexible Schedule</strong><span>Everyday or Weekdays Only — take weekends off</span></div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 3. Progress Screen -->
+  <div class="showcase-row">
+    <div class="phone-frame">
+      <img src="images/screen-progress.png" alt="WalkFirst Progress Screen" loading="lazy">
+    </div>
+    <div class="showcase-info">
+      <div class="showcase-badge">Progress</div>
+      <h3>Watch Your Habits<br>Transform.</h3>
+      <p>Detailed stats and visual progress tracking to keep you motivated and see how far you've come.</p>
+      <ul class="showcase-features">
+        <li><span class="sf-icon">&#128197;</span><div class="sf-text"><strong>Calendar Streak Tracking</strong><span>Build your streak day by day — don't break the chain</span></div></li>
+        <li><span class="sf-icon">&#128202;</span><div class="sf-text"><strong>Weekly, Monthly & Yearly Stats</strong><span>See trends over time with beautiful charts</span></div></li>
+        <li><span class="sf-icon">&#128336;</span><div class="sf-text"><strong>Screen Time Reclaimed</strong><span>See how much time you've taken back from your phone</span></div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 4. Profile Screen -->
+  <div class="showcase-row reverse">
+    <div class="phone-frame">
+      <img src="images/screen-profile.png" alt="WalkFirst Profile Screen" loading="lazy">
+    </div>
+    <div class="showcase-info">
+      <div class="showcase-badge">Profile</div>
+      <h3>Personalized<br>to You.</h3>
+      <p>Customize everything — goals, schedule, achievements. Make WalkFirst work for your lifestyle.</p>
+      <ul class="showcase-features">
+        <li><span class="sf-icon">&#127939;</span><div class="sf-text"><strong>Custom Step Goals</strong><span>Set a goal that fits — start small, build up</span></div></li>
+        <li><span class="sf-icon">&#127942;</span><div class="sf-text"><strong>Achievements & Milestones</strong><span>Unlock badges as you build healthier habits</span></div></li>
+        <li><span class="sf-icon">&#128737;</span><div class="sf-text"><strong>Privacy First</strong><span>Apple Health + Screen Time — data stays on device</span></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="how-it-works" id="how">
+  <div class="section-inner">
+    <div class="section-label">How It Works</div>
+    <h2 class="section-title">Three simple steps</h2>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3>Set Your Goal</h3>
+        <p>Choose a daily step goal that works for you. Start small or go big.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>Block Your Apps</h3>
+        <p>Pick the apps that distract you most. Instagram, TikTok, YouTube — you decide.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>Walk to Unlock</h3>
+        <p>Hit your step goal and earn screen time. Reach 100% for unlimited access all day.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tiers -->
+<section class="tiers">
+  <div class="section-inner">
+    <div class="section-label">Earn More</div>
+    <h2 class="section-title">The more you walk, the more you earn</h2>
+    <div class="tier-grid">
+      <div class="tier-card">
+        <div class="tier-pct">50%</div>
+        <div class="tier-label">of goal</div>
+        <div class="tier-reward">10 min<small>unlocked</small></div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-pct">75%</div>
+        <div class="tier-label">of goal</div>
+        <div class="tier-reward">15 min<small>unlocked</small></div>
+      </div>
+      <div class="tier-card featured">
+        <div class="tier-pct">100%</div>
+        <div class="tier-label">of goal</div>
+        <div class="tier-reward">Unlimited<small>all day access</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- (Features are now integrated into the showcase above) -->
+
+<!-- Bottom CTA -->
+<section class="bottom-cta">
+  <h2>Ready to earn your screen time?</h2>
+  <p>Walk more. Scroll less. Live better.</p>
+  <a href="#" class="cta-white">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+    Download on the App Store
+  </a>
+</section>
+
+<!-- Footer -->
+<footer>
+  <span class="footer-brand">WalkFirst</span>
+  <div class="footer-links">
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="support.html">Support</a>
+    <a href="mailto:jobinmacwan@gmail.com">Contact</a>
+  </div>
+  <p>&copy; 2025 Jobin Macwan. All rights reserved.</p>
+</footer>
+
 </body>
 </html>
