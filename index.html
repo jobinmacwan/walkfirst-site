@@ -16,21 +16,74 @@
 <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #fafafa;
+    --bg-warm: #FFF8F0;
+    --text: #1a1a1a;
+    --text-secondary: #555;
+    --text-muted: #888;
+    --border: #f0f0f0;
+    --border-light: rgba(0,0,0,0.06);
+    --accent: #FF8C00;
+    --accent-end: #FF5933;
+    --nav-bg: rgba(255,255,255,0.95);
+    --card-bg: #fafafa;
+    --card-shadow: rgba(0,0,0,0.05);
+    --footer-bg: #111;
+    --footer-text: #888;
+    --showcase-badge-bg: rgba(255,140,0,0.1);
+    --icon-bg: linear-gradient(135deg, rgba(255,140,0,0.1), rgba(255,89,51,0.1));
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0e0e0e;
+      --bg-alt: #161616;
+      --bg-warm: #1a1508;
+      --text: #f0f0f0;
+      --text-secondary: #aaa;
+      --text-muted: #777;
+      --border: #222;
+      --border-light: rgba(255,255,255,0.06);
+      --nav-bg: rgba(14,14,14,0.95);
+      --card-bg: #1a1a1a;
+      --card-shadow: rgba(0,0,0,0.2);
+      --footer-bg: #080808;
+      --footer-text: #666;
+      --showcase-badge-bg: rgba(255,140,0,0.15);
+      --icon-bg: linear-gradient(135deg, rgba(255,140,0,0.15), rgba(255,89,51,0.15));
+    }
+  }
+
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-    color: #1a1a1a;
-    background: #fff;
+    color: var(--text);
+    background: var(--bg);
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    line-height: 1.6;
   }
+
+  /* Scroll animations */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  .fade-in.delay-1 { transition-delay: 0.1s; }
+  .fade-in.delay-2 { transition-delay: 0.2s; }
+  .fade-in.delay-3 { transition-delay: 0.3s; }
 
   /* Nav */
   nav {
-    background: rgba(255,255,255,0.95);
+    background: var(--nav-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(0,0,0,0.06);
-    padding: 16px 24px;
+    border-bottom: 1px solid var(--border-light);
+    padding: 14px 24px;
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 100;
@@ -42,33 +95,48 @@
     align-items: center;
     justify-content: space-between;
   }
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
   nav .brand {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 800;
-    color: #FF8C00;
+    color: var(--accent);
     text-decoration: none;
     display: flex;
     align-items: center;
     gap: 10px;
   }
   nav .brand img {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     border-radius: 22%;
   }
+  .back-link {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .back-link:hover { color: var(--accent); }
   nav .nav-links {
     display: flex;
     align-items: center;
   }
   nav .nav-links a {
-    font-size: 15px;
-    color: #555;
+    font-size: 14px;
+    color: var(--text-muted);
     text-decoration: none;
     margin-left: 28px;
     font-weight: 500;
     transition: color 0.2s;
   }
-  nav .nav-links a:hover { color: #FF8C00; }
+  nav .nav-links a:hover { color: var(--text); }
   .hamburger {
     display: none;
     background: none;
@@ -80,9 +148,9 @@
   }
   .hamburger span {
     display: block;
-    width: 22px;
+    width: 20px;
     height: 2px;
-    background: #1a1a1a;
+    background: var(--text);
     border-radius: 2px;
     transition: transform 0.3s, opacity 0.3s;
   }
@@ -91,26 +159,26 @@
   .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
   @media (max-width: 768px) {
     .hamburger { display: flex; }
+    .back-link { display: none; }
     nav .nav-links {
       display: none;
       position: absolute;
       top: 100%;
-      left: 0;
-      right: 0;
-      background: rgba(255,255,255,0.98);
+      left: 0; right: 0;
+      background: var(--nav-bg);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       flex-direction: column;
       padding: 16px 24px 24px;
-      border-bottom: 1px solid rgba(0,0,0,0.06);
+      border-bottom: 1px solid var(--border-light);
       box-shadow: 0 8px 30px rgba(0,0,0,0.08);
     }
     nav .nav-links.open { display: flex; }
     nav .nav-links a {
       margin-left: 0;
       padding: 12px 0;
-      font-size: 17px;
-      border-bottom: 1px solid #f0f0f0;
+      font-size: 16px;
+      border-bottom: 1px solid var(--border);
       width: 100%;
       text-align: center;
     }
@@ -119,9 +187,9 @@
 
   /* Hero */
   .hero {
-    padding: 140px 24px 80px;
+    padding: 150px 24px 80px;
     text-align: center;
-    background: linear-gradient(180deg, #fff 0%, #FFF8F0 100%);
+    background: linear-gradient(180deg, var(--bg) 0%, var(--bg-warm) 100%);
     position: relative;
   }
   .hero-icon {
@@ -137,15 +205,15 @@
     font-weight: 900;
     line-height: 1.1;
     margin-bottom: 20px;
-    color: #1a1a1a;
+    letter-spacing: -1.5px;
   }
-  .hero h1 span { color: #FF8C00; }
+  .hero h1 span { color: var(--accent); }
   .hero .subtitle {
-    font-size: 20px;
-    color: #666;
+    font-size: 19px;
+    color: var(--text-secondary);
     max-width: 540px;
     margin: 0 auto 36px;
-    line-height: 1.6;
+    line-height: 1.7;
   }
   .cta-group {
     display: flex;
@@ -153,13 +221,14 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    flex-direction: column;
   }
   .cta-primary {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    background: #1a1a1a;
-    color: white;
+    background: var(--text);
+    color: var(--bg);
     font-size: 17px;
     font-weight: 600;
     padding: 16px 32px;
@@ -171,9 +240,14 @@
     transform: translateY(-2px);
     box-shadow: 0 8px 30px rgba(0,0,0,0.2);
   }
-  .cta-primary svg { width: 24px; height: 24px; fill: white; }
+  .cta-primary svg { width: 22px; height: 22px; fill: var(--bg); }
+  .cta-req {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.3px;
+  }
 
-  /* Feature Showcase (Phone + Features alternating) */
+  /* Feature Showcase */
   .showcase {
     padding: 60px 24px 0;
   }
@@ -186,15 +260,8 @@
     padding: 60px 0;
   }
   .showcase-row.reverse { flex-direction: row-reverse; }
-  .showcase-row + .showcase-row {
-    border-top: 1px solid #f0f0f0;
-  }
-
-  /* Phone image (already has mockup frame) */
-  .phone-frame {
-    flex-shrink: 0;
-    width: 280px;
-  }
+  .showcase-row + .showcase-row { border-top: 1px solid var(--border); }
+  .phone-frame { flex-shrink: 0; width: 280px; }
   .phone-frame img {
     width: 100%;
     height: auto;
@@ -202,15 +269,11 @@
     border-radius: 8px;
     filter: drop-shadow(0 20px 40px rgba(0,0,0,0.10));
   }
-
-  /* Feature details next to phone */
-  .showcase-info {
-    flex: 1;
-  }
+  .showcase-info { flex: 1; }
   .showcase-badge {
     display: inline-block;
-    background: rgba(255,140,0,0.1);
-    color: #FF8C00;
+    background: var(--showcase-badge-bg);
+    color: var(--accent);
     font-size: 12px;
     font-weight: 700;
     padding: 5px 14px;
@@ -222,15 +285,15 @@
   .showcase-info h3 {
     font-size: 30px;
     font-weight: 800;
-    color: #1a1a1a;
     margin-bottom: 12px;
     line-height: 1.2;
+    letter-spacing: -0.5px;
   }
   .showcase-info > p {
     font-size: 16px;
-    color: #666;
+    color: var(--text-secondary);
     margin-bottom: 24px;
-    line-height: 1.6;
+    line-height: 1.7;
   }
   .showcase-features {
     list-style: none;
@@ -245,14 +308,14 @@
     align-items: flex-start;
     gap: 12px;
     font-size: 15px;
-    color: #444;
+    color: var(--text-secondary);
     line-height: 1.5;
   }
   .showcase-features li .sf-icon {
     width: 36px;
     height: 36px;
     border-radius: 10px;
-    background: linear-gradient(135deg, rgba(255,140,0,0.1), rgba(255,89,51,0.1));
+    background: var(--icon-bg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -261,42 +324,30 @@
   }
   .showcase-features li .sf-text strong {
     display: block;
-    color: #1a1a1a;
+    color: var(--text);
     font-weight: 600;
     font-size: 15px;
   }
   .showcase-features li .sf-text span {
-    color: #888;
+    color: var(--text-muted);
     font-size: 14px;
   }
-
   @media (max-width: 768px) {
-    .showcase-row, .showcase-row.reverse {
-      flex-direction: column;
-      gap: 32px;
-      padding: 40px 0;
-    }
+    .showcase-row, .showcase-row.reverse { flex-direction: column; gap: 32px; padding: 40px 0; }
     .phone-frame { width: 200px; }
     .showcase-info h3 { font-size: 24px; }
     .showcase-info { text-align: center; }
     .showcase-features li { text-align: left; }
   }
 
-  /* How It Works */
-  .how-it-works {
-    padding: 80px 24px;
-    background: #fff;
-  }
-  .section-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
+  /* Section styles */
+  .section-inner { max-width: 1100px; margin: 0 auto; }
   .section-label {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: #FF8C00;
+    color: var(--accent);
     text-align: center;
     margin-bottom: 8px;
   }
@@ -305,117 +356,64 @@
     font-weight: 800;
     text-align: center;
     margin-bottom: 48px;
-    color: #1a1a1a;
+    letter-spacing: -1px;
+    line-height: 1.1;
   }
-  .steps-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
+
+  /* How It Works */
+  .how-it-works { padding: 80px 24px; background: var(--bg); }
+  .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
   .step-card {
-    background: #FAFAFA;
+    background: var(--card-bg);
     border-radius: 20px;
     padding: 36px 28px;
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
   }
-  .step-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.06);
-  }
+  .step-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px var(--card-shadow); }
   .step-num {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 48px; height: 48px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #FF8C00, #FF5933);
+    background: linear-gradient(135deg, var(--accent), var(--accent-end));
     color: white;
     font-size: 20px;
     font-weight: 800;
     margin-bottom: 16px;
   }
-  .step-card h3 {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-  .step-card p {
-    font-size: 15px;
-    color: #666;
-    line-height: 1.6;
-  }
+  .step-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .step-card p { font-size: 15px; color: var(--text-secondary); line-height: 1.6; }
 
-  /* Tier Section */
-  .tiers {
-    padding: 80px 24px;
-    background: linear-gradient(180deg, #FFF8F0 0%, #fff 100%);
-  }
-  .tier-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-  }
+  /* Tiers */
+  .tiers { padding: 80px 24px; background: linear-gradient(180deg, var(--bg-warm) 0%, var(--bg) 100%); }
+  .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 800px; margin: 0 auto; }
   .tier-card {
-    background: white;
+    background: var(--bg-card, var(--bg));
     border-radius: 20px;
     padding: 32px 24px;
     text-align: center;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 12px var(--card-shadow);
     border: 2px solid transparent;
     transition: border-color 0.3s, transform 0.3s;
   }
   .tier-card:hover { transform: translateY(-4px); }
-  .tier-card.featured {
-    border-color: #FF8C00;
-    box-shadow: 0 8px 32px rgba(255,140,0,0.15);
-  }
-  .tier-pct {
-    font-size: 42px;
-    font-weight: 900;
-    color: #FF8C00;
-    margin-bottom: 4px;
-  }
-  .tier-label {
-    font-size: 14px;
-    color: #999;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-  }
-  .tier-reward {
-    font-size: 24px;
-    font-weight: 700;
-    color: #1a1a1a;
-  }
-  .tier-reward small {
-    display: block;
-    font-size: 14px;
-    color: #888;
-    font-weight: 500;
-    margin-top: 4px;
-  }
+  .tier-card.featured { border-color: var(--accent); box-shadow: 0 8px 32px rgba(255,140,0,0.15); }
+  .tier-pct { font-size: 42px; font-weight: 900; color: var(--accent); margin-bottom: 4px; }
+  .tier-label { font-size: 14px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+  .tier-reward { font-size: 24px; font-weight: 700; }
+  .tier-reward small { display: block; font-size: 14px; color: var(--text-muted); font-weight: 500; margin-top: 4px; }
+
+  /* Pricing */
+  .pricing-badges { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .badge-free { background: var(--card-bg); padding: 10px 20px; border-radius: 12px; font-size: 15px; font-weight: 600; border: 1px solid var(--border); }
+  .badge-pro { background: linear-gradient(135deg, var(--accent), var(--accent-end)); padding: 10px 20px; border-radius: 12px; font-size: 15px; font-weight: 600; color: white; }
 
   /* CTA Bottom */
-  .bottom-cta {
-    padding: 80px 24px;
-    text-align: center;
-    background: linear-gradient(135deg, #FF8C00, #FF5933);
-    color: white;
-  }
-  .bottom-cta h2 {
-    font-size: 36px;
-    font-weight: 800;
-    margin-bottom: 12px;
-  }
-  .bottom-cta p {
-    font-size: 18px;
-    opacity: 0.9;
-    margin-bottom: 32px;
-  }
+  .bottom-cta { padding: 80px 24px; text-align: center; background: linear-gradient(135deg, var(--accent), var(--accent-end)); color: white; }
+  .bottom-cta h2 { font-size: 36px; font-weight: 800; margin-bottom: 12px; }
+  .bottom-cta p { font-size: 18px; opacity: 0.9; margin-bottom: 32px; }
   .cta-white {
     display: inline-flex;
     align-items: center;
@@ -429,34 +427,103 @@
     text-decoration: none;
     transition: transform 0.2s, box-shadow 0.2s;
   }
-  .cta-white:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-  }
+  .cta-white:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
   .cta-white svg { width: 22px; height: 22px; }
+
+  /* FAQ */
+  .faq-section { padding: 80px 24px; background: var(--bg-alt); }
+  .faq-list { max-width: 700px; margin: 0 auto; }
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+    padding: 0;
+  }
+  .faq-item:first-child { border-top: 1px solid var(--border); }
+  .faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 20px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    font-family: inherit;
+    line-height: 1.4;
+  }
+  .faq-question:hover { color: var(--accent); }
+  .faq-chevron {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    fill: var(--text-muted);
+    transition: transform 0.3s;
+  }
+  .faq-item.open .faq-chevron { transform: rotate(180deg); }
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+  }
+  .faq-item.open .faq-answer { max-height: 200px; }
+  .faq-answer p {
+    padding: 0 0 20px;
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
 
   /* Footer */
   footer {
-    background: #1a1a1a;
-    color: #aaa;
-    padding: 40px 24px;
+    background: var(--footer-bg);
+    color: var(--footer-text);
+    padding: 48px 24px 32px;
     text-align: center;
-    font-size: 14px;
+    font-size: 13px;
   }
-  footer a {
-    color: #aaa;
-    text-decoration: none;
-    margin: 0 12px;
-  }
-  footer a:hover { color: #FF8C00; }
-  footer .footer-brand {
-    color: #FF8C00;
+  footer a { color: var(--footer-text); text-decoration: none; transition: color 0.2s; }
+  footer a:hover { color: var(--accent); }
+  .footer-brand {
+    color: var(--accent);
     font-weight: 700;
     font-size: 18px;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     display: block;
   }
-  footer .footer-links { margin-bottom: 16px; }
+  .footer-social {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .footer-social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    transition: all 0.2s;
+  }
+  .footer-social a:hover { background: rgba(255,140,0,0.15); }
+  .footer-social a svg { width: 16px; height: 16px; fill: var(--footer-text); }
+  .footer-social a:hover svg { fill: var(--accent); }
+  .footer-links {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .footer-divider { width: 40px; height: 1px; background: rgba(255,255,255,0.08); margin: 0 auto 20px; }
+  footer .copyright { color: rgba(255,255,255,0.3); font-size: 12px; }
+  footer .portfolio-link { display: block; margin-top: 8px; color: rgba(255,255,255,0.25); font-size: 12px; }
+  footer .portfolio-link:hover { color: var(--accent); }
 
   /* Responsive */
   @media (max-width: 768px) {
@@ -473,15 +540,18 @@
 
 <nav>
   <div class="nav-inner">
-    <a href="index.html" class="brand"><img src="images/app-icon.png" alt="WalkFirst Icon">WalkFirst</a>
+    <div class="nav-left">
+      <a href="index.html" class="brand"><img src="images/app-icon.png" alt="WalkFirst Icon">WalkFirst</a>
+      <a href="https://macwanapps.com" class="back-link">&larr; Macwan Apps</a>
+    </div>
     <button class="hamburger" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
     <div class="nav-links">
       <a href="#features">Features</a>
       <a href="#how">How It Works</a>
+      <a href="#faq">FAQ</a>
       <a href="support.html">Support</a>
-      <a href="privacy-policy.html">Privacy</a>
     </div>
   </div>
 </nav>
@@ -494,8 +564,9 @@
   <div class="cta-group">
     <a href="https://apps.apple.com/app/id6758828207" class="cta-primary">
       <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-      Available on the App Store
+      Download on the App Store
     </a>
+    <span class="cta-req">Requires iOS 17.0 or later</span>
   </div>
 </section>
 
@@ -506,8 +577,7 @@
     <h2 class="section-title">Designed for simplicity</h2>
   </div>
 
-  <!-- 1. Home Screen -->
-  <div class="showcase-row">
+  <div class="showcase-row fade-in">
     <div class="phone-frame">
       <img src="images/screen-home.png" alt="WalkFirst Home Screen" loading="lazy">
     </div>
@@ -523,8 +593,7 @@
     </div>
   </div>
 
-  <!-- 2. Apps Screen -->
-  <div class="showcase-row reverse">
+  <div class="showcase-row reverse fade-in">
     <div class="phone-frame">
       <img src="images/screen-apps.png" alt="WalkFirst Apps Screen" loading="lazy">
     </div>
@@ -540,8 +609,7 @@
     </div>
   </div>
 
-  <!-- 3. Progress Screen -->
-  <div class="showcase-row">
+  <div class="showcase-row fade-in">
     <div class="phone-frame">
       <img src="images/screen-progress.png" alt="WalkFirst Progress Screen" loading="lazy">
     </div>
@@ -557,8 +625,7 @@
     </div>
   </div>
 
-  <!-- 4. Profile Screen -->
-  <div class="showcase-row reverse">
+  <div class="showcase-row reverse fade-in">
     <div class="phone-frame">
       <img src="images/screen-profile.png" alt="WalkFirst Profile Screen" loading="lazy">
     </div>
@@ -576,22 +643,22 @@
 </section>
 
 <!-- How It Works -->
-<section class="how-it-works" id="how">
+<section class="how-it-works fade-in" id="how">
   <div class="section-inner">
     <div class="section-label">How It Works</div>
     <h2 class="section-title">Three simple steps</h2>
     <div class="steps-grid">
-      <div class="step-card">
+      <div class="step-card fade-in delay-1">
         <div class="step-num">1</div>
         <h3>Set Your Goal</h3>
         <p>Choose a daily step goal that works for you. Start small or go big.</p>
       </div>
-      <div class="step-card">
+      <div class="step-card fade-in delay-2">
         <div class="step-num">2</div>
         <h3>Block Your Apps</h3>
         <p>Pick the apps that distract you most. Instagram, TikTok, YouTube — you decide.</p>
       </div>
-      <div class="step-card">
+      <div class="step-card fade-in delay-3">
         <div class="step-num">3</div>
         <h3>Walk to Unlock</h3>
         <p>Hit your step goal and earn screen time. Reach 100% for unlimited access all day.</p>
@@ -601,22 +668,22 @@
 </section>
 
 <!-- Tiers -->
-<section class="tiers">
+<section class="tiers fade-in">
   <div class="section-inner">
     <div class="section-label">Earn More</div>
     <h2 class="section-title">The more you walk, the more you earn</h2>
     <div class="tier-grid">
-      <div class="tier-card featured">
+      <div class="tier-card featured fade-in delay-1">
         <div class="tier-pct">50%</div>
         <div class="tier-label">of goal</div>
         <div class="tier-reward">10 min<small>unlocked</small></div>
       </div>
-      <div class="tier-card featured">
+      <div class="tier-card featured fade-in delay-2">
         <div class="tier-pct">75%</div>
         <div class="tier-label">of goal</div>
         <div class="tier-reward">15 min<small>unlocked</small></div>
       </div>
-      <div class="tier-card featured">
+      <div class="tier-card featured fade-in delay-3">
         <div class="tier-pct">100%</div>
         <div class="tier-label">of goal</div>
         <div class="tier-reward">Unlimited<small>all day access</small></div>
@@ -626,14 +693,59 @@
 </section>
 
 <!-- Pricing -->
-<section class="how-it-works" style="padding-bottom:60px;">
+<section class="how-it-works fade-in" style="padding-bottom:60px;">
   <div class="section-inner" style="text-align:center;">
     <div class="section-label">Pricing</div>
     <h2 class="section-title">Free to start. Pro when you're ready.</h2>
-    <p style="font-size:18px;color:#666;max-width:600px;margin:0 auto 32px;line-height:1.6;">WalkFirst is free to download with core features included. Upgrade to <strong style="color:#FF8C00;">WalkFirst Pro</strong> for unlimited app blocking, detailed stats, achievements, and more.</p>
-    <div style="display:inline-flex;gap:12px;flex-wrap:wrap;justify-content:center;">
-      <span style="background:#f5f5f5;padding:10px 20px;border-radius:12px;font-size:15px;font-weight:600;color:#1a1a1a;">Free — Core features included</span>
-      <span style="background:linear-gradient(135deg,#FF8C00,#FF5933);padding:10px 20px;border-radius:12px;font-size:15px;font-weight:600;color:white;">Pro — Unlock everything</span>
+    <p style="font-size:18px;color:var(--text-secondary);max-width:600px;margin:0 auto 32px;line-height:1.7;">WalkFirst is free to download with core features included. Upgrade to <strong style="color:var(--accent);">WalkFirst Pro</strong> for unlimited app blocking, detailed stats, achievements, and more.</p>
+    <div class="pricing-badges">
+      <span class="badge-free">Free — Core features included</span>
+      <span class="badge-pro">Pro — Unlock everything</span>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section fade-in" id="faq">
+  <div class="section-inner">
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title">Frequently asked questions</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          Is WalkFirst free to use?
+          <svg class="faq-chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+        </button>
+        <div class="faq-answer"><p>Yes! WalkFirst is free to download with core features. You can upgrade to WalkFirst Pro for unlimited app blocking, detailed statistics, achievements, and more.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          How does app blocking work?
+          <svg class="faq-chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+        </button>
+        <div class="faq-answer"><p>WalkFirst uses Apple's Screen Time API to block apps you choose. Once you hit your daily step goal (50%, 75%, or 100%), the apps unlock automatically. Everything resets the next morning.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          Which apps can I block?
+          <svg class="faq-chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+        </button>
+        <div class="faq-answer"><p>You can block any app on your device — social media, games, video streaming, messaging apps, and more. You choose which apps to include, and you can update your list anytime.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          Does WalkFirst track my personal data?
+          <svg class="faq-chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+        </button>
+        <div class="faq-answer"><p>No. WalkFirst is built with privacy first. Your step data comes from Apple Health and stays on your device. We don't collect, store, or share any personal information.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          What iOS version do I need?
+          <svg class="faq-chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+        </button>
+        <div class="faq-answer"><p>WalkFirst requires iOS 17.0 or later. It works on all iPhones that support iOS 17.</p></div>
+      </div>
     </div>
   </div>
 </section>
@@ -644,21 +756,41 @@
   <p>Walk more. Scroll less. Live better.</p>
   <a href="https://apps.apple.com/app/id6758828207" class="cta-white">
     <svg viewBox="0 0 24 24" width="22" height="22"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-    Available on the App Store
+    Download on the App Store
   </a>
 </section>
 
 <!-- Footer -->
 <footer>
   <span class="footer-brand">WalkFirst</span>
+  <div class="footer-social">
+    <a href="https://github.com/jobinmacwan" aria-label="GitHub">
+      <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+    </a>
+  </div>
   <div class="footer-links">
     <a href="privacy-policy.html">Privacy Policy</a>
     <a href="terms.html">Terms of Service</a>
     <a href="support.html">Support</a>
     <a href="mailto:support@macwanapps.com">Contact</a>
   </div>
-  <p>&copy; 2026 Jobin Macwan. All rights reserved.</p>
+  <div class="footer-divider"></div>
+  <p class="copyright">&copy; 2026 Jobin Macwan. All rights reserved.</p>
+  <a href="https://macwanapps.com" class="portfolio-link">A Macwan Apps product</a>
 </footer>
+
+<!-- Scroll animations -->
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>
