@@ -17,6 +17,9 @@ HERE = pathlib.Path(__file__).parent
 shutil.copy(MAIN / 'css/site.css', HERE / 'css/site.css')
 for f in ['analytics.js', 'site.js']:
     shutil.copy(MAIN / 'js' / f, HERE / 'js' / f)
+(HERE / 'fonts').mkdir(exist_ok=True)
+for f in (MAIN / 'fonts').glob('*.woff2'):
+    shutil.copy(f, HERE / 'fonts' / f.name)
 
 page = (MAIN / 'apps/walkfirst/index.html').read_text()
 for img in set(re.findall(r'/images/([A-Za-z0-9._-]+)', page)):
